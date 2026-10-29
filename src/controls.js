@@ -1,0 +1,4 @@
+export const defaults={up:'KeyW',down:'KeyS',left:'KeyA',right:'KeyD',attack:'KeyK',dodge:'ShiftLeft',revive:'KeyE',jump:'Space',special:'KeyQ'};
+export function assignKey(bindings,action,code){const next={...bindings};const other=Object.keys(next).find(a=>a!==action&&next[a]===code);if(other)next[other]=next[action];next[action]=code;return next;}
+export function padInput(pad){const none={x:0,y:0,attack:false,dodge:false,revive:false,jump:false,special:false};if(!pad||!pad.connected||pad.mapping!=='standard')return none;const b=i=>!!pad.buttons[i]?.pressed;let x=pad.axes[0]||0,y=pad.axes[1]||0;const n=Math.hypot(x,y);if(n<.18)x=y=0;else{const scale=Math.min(1,(n-.18)/.82)/n;x*=scale;y*=scale;}return {x:b(15)?1:b(14)?-1:x,y:b(13)?1:b(12)?-1:y,attack:b(0),dodge:b(1),revive:b(2),jump:b(3),special:b(5)};}
+export const keyName=code=>code.replace(/^Key/,'').replace(/^Digit/,'').replace('ShiftLeft','Left Shift').replace('ShiftRight','Right Shift').replace('Arrow','');
